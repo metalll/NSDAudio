@@ -20,7 +20,6 @@ public class AudioInputBase64 {
     public AudioInputBase64(String base64){
         byte[] decodedBytes = NSDBase64Tool.decode(base64);
         File outFile = new File(Environment.getExternalStorageDirectory() + path);
-
         if(outFile.exists()){
           outFile.delete();
         }
@@ -75,6 +74,7 @@ public class AudioInputBase64 {
 
     public void stopAudio(){
         this.isStopped = true;
+        if(delegate!=null)
         this.delegate.afterPlay();
     }
 
