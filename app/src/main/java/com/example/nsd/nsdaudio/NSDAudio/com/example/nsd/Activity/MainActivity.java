@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     Button player = null;
     Button recorder = null;
     AudioOutputBase64 audioOutputBase64 = new AudioOutputBase64() ;
-    AudioInputBase64 audioInputBase64;
+    AudioInputBase64 audioInputBase64 ;
     String str = null;
 
     @Override
@@ -27,13 +27,7 @@ public class MainActivity extends AppCompatActivity {
         player = (Button) findViewById(R.id.player);
         recorder = (Button) findViewById(R.id.recorder);
 
-        audioInputBase64.setDelegate(new AudioInputDelegate() {
-            @Override
-            public void afterPlay() {
-                Toast.makeText(MainActivity.this,"Audio stopped",Toast.LENGTH_LONG).show();
-                player.setText("Play");
-            }
-        });
+
 
         audioOutputBase64.setDelegate(new AudioOutputDelegate() {
             @Override
@@ -75,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             audioInputBase64 = new AudioInputBase64(str);
-
+                audioInputBase64.setDelegate(new AudioInputDelegate() {
+                    @Override
+                    public void afterPlay() {
+                        //      Toast.makeText(MainActivity.this,"Audio stopped",Toast.LENGTH_LONG).show();
+                        if(player!=null)  player.setText("Play");
+                    }
+                });
 
                 audioInputBase64.playAudio();
                 ((Button)v).setText("Stop");
